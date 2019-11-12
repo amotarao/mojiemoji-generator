@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     splitedText () {
-      return this.text.split('')
+      return [...this.text]
     },
   },
   methods: {
