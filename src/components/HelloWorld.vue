@@ -1,114 +1,124 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+  <div class="hello-world">
+    <div class="preview">
+      <div class="frame" :data-text-length="splitedText.length" ref="frame">
+        <div class="inner" :style="style">
+          <span v-for="(char, i) in splitedText" :key="i">{{ char }}</span>
+        </div>
+      </div>
+    </div>
+    <input v-model="style.color" />
+    <input v-model="style.fontFamily" />
+    <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
+    <input v-model="text" />
+    <button @click="generateImage">生成</button>
+    <section class="download" v-if="image">
+      <a :href="image" :download="`${text}.png`" class="image">
+        <img :src="image" />
+      </a>
+      <p :style="{ 'margin-top': '16px' }">画像をクリックでダウンロード</p>
+    </section>
   </div>
 </template>
 
 <script>
+import html2canvas from 'html2canvas'
+
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
+  name: 'HelloWorld',
+  data () {
+    return {
+      style: {
+        color: '#2c3e50',
+        fontFamily: 'sans-serif',
+        fontWeight: '900',
+      },
+      text: 'あいうえ',
+      image: null,
+    };
+  },
+  computed: {
+    splitedText () {
+      return this.text.split('')
+    },
+  },
+  methods: {
+    async generateImage () {
+      const canvas = await html2canvas(this.$refs.frame, {
+        backgroundColor: null,
+      })
+      this.image = canvas.toDataURL('image/png')
+    },
+  },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+<style lang="scss" scoped>
+section {
+  margin: 40px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.preview {
+  width: 320px;
+  height: 320px;
+  margin: 40px auto;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.frame {
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  line-height: 1;
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  span {
+    text-align: center;
+  }
 }
-a {
-  color: #42b983;
+.frame[data-text-length='1'] {
+  font-size: 320px;
+
+  span {
+    width: 320px;
+    height: 320px;
+  }
+}
+.frame[data-text-length='2'],
+.frame[data-text-length='3'],
+.frame[data-text-length='4'] {
+  font-size: 160px;
+
+  span {
+    width: 160px;
+    height: 160px;
+  }
+}
+.frame[data-text-length='5'],
+.frame[data-text-length='6'],
+.frame[data-text-length='7'],
+.frame[data-text-length='8'],
+.frame[data-text-length='9'] {
+  font-size: 106.66px;
+
+  span {
+    width: 106.66px;
+    height: 106.66px;
+  }
+}
+
+.image {
+  display: block;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
 }
 </style>
