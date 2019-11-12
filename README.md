@@ -1,4 +1,4 @@
-# vue-mojiemoji-generator
+# mojiemoji-generator
 
 ## Project setup
 ```
