@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-world">
+  <div class="mojiemoji-generator">
     <div class="preview">
       <div class="frame" :data-text-length="splitedText.length" ref="frame">
         <div class="inner" :style="style">
@@ -25,7 +25,7 @@
 import html2canvas from 'html2canvas'
 
 export default {
-  name: 'HelloWorld',
+  name: 'MojiemojiGenerator',
   data () {
     return {
       style: {

@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <hello-world />
+    <mojiemoji-generator />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import MojiemojiGenerator from "@/components/MojiemojiGenerator.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    MojiemojiGenerator
   }
 };
 </script>
