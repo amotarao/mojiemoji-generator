@@ -16,6 +16,13 @@
       <button type="submit" @click="generateImage">生成</button>
     </form>
 
+    <github-button
+      href="https://github.com/amotarao/mojiemoji-generator/fork"
+      data-color-scheme="no-preference: light; light: light; dark: light;"
+      aria-label="Fork amotarao/mojiemoji-generator on GitHub"
+      >Fork</github-button
+    >
+
     <section class="download" v-if="image">
       <a :href="image" :download="`${text}.png`" class="image">
         <img :src="image" />
@@ -27,9 +34,13 @@
 
 <script>
 import html2canvas from 'html2canvas';
+import GithubButton from 'vue-github-button';
 
 export default {
   name: 'MojiemojiGenerator',
+  components: {
+    GithubButton,
+  },
   data() {
     return {
       style: {
