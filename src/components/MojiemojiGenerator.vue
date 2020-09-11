@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import html2canvas from 'html2canvas'
+import html2canvas from 'html2canvas';
 
 export default {
   name: 'MojiemojiGenerator',
-  data () {
+  data() {
     return {
       style: {
         color: '#2c3e50',
@@ -38,16 +38,16 @@ export default {
     };
   },
   computed: {
-    splitedText () {
-      return [...this.text]
+    splitedText() {
+      return [...this.text];
     },
   },
   methods: {
-    async generateImage () {
+    async generateImage() {
       const canvas = await html2canvas(this.$refs.frame, {
         backgroundColor: null,
-      })
-      this.image = canvas.toDataURL('image/png')
+      });
+      this.image = canvas.toDataURL('image/png');
     },
   },
 };
@@ -62,7 +62,7 @@ section {
   width: 320px;
   height: 320px;
   margin: 40px auto;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .frame {
@@ -71,7 +71,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   line-height: 1;
 
   .inner {
@@ -119,6 +119,6 @@ section {
   width: 320px;
   height: 320px;
   margin: 0 auto;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 </style>

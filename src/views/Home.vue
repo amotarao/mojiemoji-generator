@@ -6,12 +6,12 @@
 
 <script>
 // @ is an alias to /src
-import MojiemojiGenerator from "@/components/MojiemojiGenerator.vue";
+import MojiemojiGenerator from '@/components/MojiemojiGenerator.vue';
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
-    MojiemojiGenerator
-  }
+    MojiemojiGenerator,
+  },
 };
 </script>
