@@ -1,27 +1,32 @@
 <template>
   <div class="mojiemoji-generator">
-    <div class="preview">
+    <section>
+      <h1>mojiemoji-generator</h1>
+      <github-button
+        href="https://github.com/amotarao/mojiemoji-generator"
+        data-size="large"
+        aria-label="Star amotarao/mojiemoji-generator on GitHub"
+        >Star</github-button
+      >
+    </section>
+
+    <section class="preview">
       <div class="frame" :data-text-length="splitedText.length" ref="frame">
         <div class="inner" :style="style">
           <span v-for="(char, i) in splitedText" :key="i">{{ char }}</span>
         </div>
       </div>
-    </div>
+    </section>
 
-    <form @submit.prevent>
-      <input v-model="style.color" type="color" />
-      <input v-model="style.fontFamily" />
-      <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
-      <input v-model="text" />
-      <button type="submit" @click="generateImage">生成</button>
-    </form>
-
-    <github-button
-      href="https://github.com/amotarao/mojiemoji-generator/fork"
-      data-color-scheme="no-preference: light; light: light; dark: light;"
-      aria-label="Fork amotarao/mojiemoji-generator on GitHub"
-      >Fork</github-button
-    >
+    <section>
+      <form @submit.prevent>
+        <input v-model="style.color" type="color" />
+        <input v-model="style.fontFamily" />
+        <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
+        <input v-model="text" />
+        <button type="submit" @click="generateImage">生成</button>
+      </form>
+    </section>
 
     <section class="download" v-if="image">
       <a :href="image" :download="`${text}.png`" class="image">
@@ -71,6 +76,10 @@ export default {
 <style lang="scss" scoped>
 section {
   margin: 40px;
+}
+
+h1 {
+  margin-bottom: 24px;
 }
 
 .preview {
