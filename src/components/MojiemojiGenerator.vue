@@ -20,7 +20,7 @@
       <a :href="image" :download="`${text}.png`" class="image">
         <img :src="image" />
       </a>
-      <p :style="{ 'margin-top': '16px' }">画像をクリックでダウンロード</p>
+      <p>画像をクリックでダウンロード</p>
     </section>
   </div>
 </template>
@@ -130,6 +130,12 @@ section {
     max-height: 100%;
     max-width: 100%;
     width: auto;
+  }
+}
+
+.download {
+  p {
+    margin-top: 16px;
   }
 }
 </style>
