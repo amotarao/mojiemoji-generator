@@ -120,5 +120,12 @@ section {
   height: 320px;
   margin: 0 auto;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  img {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+  }
 }
 </style>
