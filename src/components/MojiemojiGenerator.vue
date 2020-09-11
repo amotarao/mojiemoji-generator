@@ -7,11 +7,15 @@
         </div>
       </div>
     </div>
-    <input v-model="style.color" />
-    <input v-model="style.fontFamily" />
-    <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
-    <input v-model="text" />
-    <button @click="generateImage">生成</button>
+
+    <form @submit.prevent>
+      <input v-model="style.color" type="color" />
+      <input v-model="style.fontFamily" />
+      <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
+      <input v-model="text" />
+      <button type="submit" @click="generateImage">生成</button>
+    </form>
+
     <section class="download" v-if="image">
       <a :href="image" :download="`${text}.png`" class="image">
         <img :src="image" />
