@@ -65,7 +65,6 @@ export default defineComponent({
     });
 
     const generate = async () => {
-      console.log(frameRef.value);
       const canvas = await html2canvas(frameRef.value, {
         backgroundColor: null,
         height: 320,
