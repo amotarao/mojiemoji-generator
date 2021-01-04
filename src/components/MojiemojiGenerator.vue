@@ -1,36 +1,40 @@
 <template>
-  <div class="mojiemoji-generator">
-    <section>
-      <h1>mojiemoji-generator</h1>
-      <github-button
-        href="https://github.com/amotarao/mojiemoji-generator"
-        data-size="large"
-        aria-label="Star amotarao/mojiemoji-generator on GitHub"
-        >Star</github-button
-      >
+  <div :class="$style.wrapper">
+    <section :class="$style.section">
+      <h1 :class="$style.title">mojiemoji-generator</h1>
+      <p :class="$style.github">
+        <a
+          class="github-button"
+          href="https://github.com/amotarao/mojiemoji-generator"
+          data-color-scheme="no-preference: light; light: light; dark: dark;"
+          data-size="large"
+          aria-label="Star amotarao/mojiemoji-generator on GitHub"
+          >Star</a
+        >
+      </p>
     </section>
 
-    <section class="preview">
-      <div class="frame" :data-text-length="splitedText.length" ref="frame">
-        <div class="inner" :style="style">
+    <section :class="$style.preview">
+      <div :class="$style.frame" :data-text-length="splitedText.length" ref="frameRef">
+        <div :class="$style.inner" :style="style">
           <span v-for="(char, i) in splitedText" :key="i">{{ char }}</span>
         </div>
       </div>
     </section>
 
-    <section>
+    <section :class="$style.section">
       <form @submit.prevent>
         <input v-model="style.color" type="color" />
         <input v-model="style.fontFamily" />
         <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
         <input v-model="text" />
-        <button type="submit" @click="generateImage">生成</button>
+        <button type="submit" @click="generate">生成</button>
       </form>
     </section>
 
-    <section class="download" v-if="image">
-      <a :href="image" :download="`${text}.png`" class="image">
-        <img :src="image" />
+    <section :class="$style.download" v-if="image">
+      <a :href="image" :download="`${text}.png`" :class="$style.image">
+        <img :src="image" :alt="`${text}`" />
       </a>
       <p>画像をクリックでダウンロード</p>
     </section>
@@ -38,16 +42,13 @@
 </template>
 
 <script>
+import { computed, defineComponent, reactive, ref, toRefs } from 'vue';
 import html2canvas from 'html2canvas';
-import GithubButton from 'vue-github-button';
 
-export default {
+export default defineComponent({
   name: 'MojiemojiGenerator',
-  components: {
-    GithubButton,
-  },
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       style: {
         color: '#2c3e50',
         fontFamily: 'sans-serif',
@@ -55,31 +56,46 @@ export default {
       },
       text: 'あいうえ',
       image: null,
+    });
+
+    const frameRef = ref();
+
+    const splitedText = computed(() => {
+      return [...state.text];
+    });
+
+    const generate = async () => {
+      console.log(frameRef.value);
+      const canvas = await html2canvas(frameRef.value, {
+        backgroundColor: null,
+        height: 320,
+        width: 320,
+        scrollY: window.scrollY * -1,
+      });
+      state.image = canvas.toDataURL('image/png');
+    };
+
+    return {
+      ...toRefs(state),
+      frameRef,
+      splitedText,
+      generate,
     };
   },
-  computed: {
-    splitedText() {
-      return [...this.text];
-    },
-  },
-  methods: {
-    async generateImage() {
-      const canvas = await html2canvas(this.$refs.frame, {
-        backgroundColor: null,
-      });
-      this.image = canvas.toDataURL('image/png');
-    },
-  },
-};
+});
 </script>
 
-<style lang="scss" scoped>
-section {
+<style lang="scss" module>
+.section {
   margin: 40px;
 }
 
-h1 {
+.title {
   margin-bottom: 24px;
+}
+
+.github {
+  height: 28px;
 }
 
 .preview {
@@ -95,7 +111,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-
   line-height: 1;
 
   .inner {
@@ -107,6 +122,7 @@ h1 {
     text-align: center;
   }
 }
+
 .frame[data-text-length='1'] {
   font-size: 320px;
 
@@ -115,6 +131,7 @@ h1 {
     height: 320px;
   }
 }
+
 .frame[data-text-length='2'],
 .frame[data-text-length='3'],
 .frame[data-text-length='4'] {
@@ -125,6 +142,7 @@ h1 {
     height: 160px;
   }
 }
+
 .frame[data-text-length='5'],
 .frame[data-text-length='6'],
 .frame[data-text-length='7'],
