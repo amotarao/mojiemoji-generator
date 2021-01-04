@@ -2,11 +2,13 @@
   <div class="mojiemoji-generator">
     <section>
       <h1>mojiemoji-generator</h1>
-      <GithubButton
+      <a
+        class="github-button"
         href="https://github.com/amotarao/mojiemoji-generator"
+        data-color-scheme="no-preference: light; light: light; dark: dark;"
         data-size="large"
         aria-label="Star amotarao/mojiemoji-generator on GitHub"
-        >Star</GithubButton
+        >Star</a
       >
     </section>
 
@@ -39,13 +41,9 @@
 
 <script>
 import html2canvas from 'html2canvas';
-import GithubButton from 'vue-github-button';
 
 export default {
   name: 'MojiemojiGenerator',
-  components: {
-    GithubButton,
-  },
   data() {
     return {
       style: {
