@@ -2,14 +2,16 @@
   <div :class="$style.wrapper">
     <section :class="$style.section">
       <h1 :class="$style.title">mojiemoji-generator</h1>
-      <a
-        class="github-button"
-        href="https://github.com/amotarao/mojiemoji-generator"
-        data-color-scheme="no-preference: light; light: light; dark: dark;"
-        data-size="large"
-        aria-label="Star amotarao/mojiemoji-generator on GitHub"
-        >Star</a
-      >
+      <p :class="$style.github">
+        <a
+          class="github-button"
+          href="https://github.com/amotarao/mojiemoji-generator"
+          data-color-scheme="no-preference: light; light: light; dark: dark;"
+          data-size="large"
+          aria-label="Star amotarao/mojiemoji-generator on GitHub"
+          >Star</a
+        >
+      </p>
     </section>
 
     <section :class="$style.preview">
@@ -66,6 +68,9 @@ export default defineComponent({
       console.log(frameRef.value);
       const canvas = await html2canvas(frameRef.value, {
         backgroundColor: null,
+        height: 320,
+        width: 320,
+        scrollY: window.scrollY * -1,
       });
       state.image = canvas.toDataURL('image/png');
     };
@@ -87,6 +92,10 @@ export default defineComponent({
 
 .title {
   margin-bottom: 24px;
+}
+
+.github {
+  height: 28px;
 }
 
 .preview {
