@@ -1,7 +1,7 @@
 <template>
-  <div class="mojiemoji-generator">
-    <section>
-      <h1>mojiemoji-generator</h1>
+  <div :class="$style.wrapper">
+    <section :class="$style.section">
+      <h1 :class="$style.title">mojiemoji-generator</h1>
       <a
         class="github-button"
         href="https://github.com/amotarao/mojiemoji-generator"
@@ -12,15 +12,15 @@
       >
     </section>
 
-    <section class="preview">
-      <div class="frame" :data-text-length="splitedText.length" ref="frameRef">
-        <div class="inner" :style="style">
+    <section :class="$style.preview">
+      <div :class="$style.frame" :data-text-length="splitedText.length" ref="frameRef">
+        <div :class="$style.inner" :style="style">
           <span v-for="(char, i) in splitedText" :key="i">{{ char }}</span>
         </div>
       </div>
     </section>
 
-    <section>
+    <section :class="$style.section">
       <form @submit.prevent>
         <input v-model="style.color" type="color" />
         <input v-model="style.fontFamily" />
@@ -30,9 +30,9 @@
       </form>
     </section>
 
-    <section class="download" v-if="image">
-      <a :href="image" :download="`${text}.png`" class="image">
-        <img :src="image" />
+    <section :class="$style.download" v-if="image">
+      <a :href="image" :download="`${text}.png`" :class="$style.image">
+        <img :src="image" :alt="`${text}`" />
       </a>
       <p>画像をクリックでダウンロード</p>
     </section>
@@ -80,12 +80,12 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-section {
+<style lang="scss" module>
+.section {
   margin: 40px;
 }
 
-h1 {
+.title {
   margin-bottom: 24px;
 }
 
@@ -102,7 +102,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-
   line-height: 1;
 
   .inner {
@@ -114,6 +113,7 @@ h1 {
     text-align: center;
   }
 }
+
 .frame[data-text-length='1'] {
   font-size: 320px;
 
@@ -122,6 +122,7 @@ h1 {
     height: 320px;
   }
 }
+
 .frame[data-text-length='2'],
 .frame[data-text-length='3'],
 .frame[data-text-length='4'] {
@@ -132,6 +133,7 @@ h1 {
     height: 160px;
   }
 }
+
 .frame[data-text-length='5'],
 .frame[data-text-length='6'],
 .frame[data-text-length='7'],
