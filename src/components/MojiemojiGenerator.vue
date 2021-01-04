@@ -13,7 +13,7 @@
     </section>
 
     <section class="preview">
-      <div class="frame" :data-text-length="splitedText.length" ref="frame">
+      <div class="frame" :data-text-length="splitedText.length" ref="frameRef">
         <div class="inner" :style="style">
           <span v-for="(char, i) in splitedText" :key="i">{{ char }}</span>
         </div>
@@ -26,7 +26,7 @@
         <input v-model="style.fontFamily" />
         <input v-model="style.fontWeight" type="number" min="100" max="900" step="100" />
         <input v-model="text" />
-        <button type="submit" @click="generateImage">生成</button>
+        <button type="submit" @click="generate">生成</button>
       </form>
     </section>
 
@@ -40,12 +40,13 @@
 </template>
 
 <script>
+import { computed, defineComponent, reactive, ref, toRefs } from 'vue';
 import html2canvas from 'html2canvas';
 
-export default {
+export default defineComponent({
   name: 'MojiemojiGenerator',
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       style: {
         color: '#2c3e50',
         fontFamily: 'sans-serif',
@@ -53,22 +54,30 @@ export default {
       },
       text: 'あいうえ',
       image: null,
-    };
-  },
-  computed: {
-    splitedText() {
-      return [...this.text];
-    },
-  },
-  methods: {
-    async generateImage() {
-      const canvas = await html2canvas(this.$refs.frame, {
+    });
+
+    const frameRef = ref();
+
+    const splitedText = computed(() => {
+      return [...state.text];
+    });
+
+    const generate = async () => {
+      console.log(frameRef.value);
+      const canvas = await html2canvas(frameRef.value, {
         backgroundColor: null,
       });
-      this.image = canvas.toDataURL('image/png');
-    },
+      state.image = canvas.toDataURL('image/png');
+    };
+
+    return {
+      ...toRefs(state),
+      frameRef,
+      splitedText,
+      generate,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
