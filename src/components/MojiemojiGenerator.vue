@@ -2,11 +2,11 @@
   <div class="mojiemoji-generator">
     <section>
       <h1>mojiemoji-generator</h1>
-      <github-button
+      <GithubButton
         href="https://github.com/amotarao/mojiemoji-generator"
         data-size="large"
         aria-label="Star amotarao/mojiemoji-generator on GitHub"
-        >Star</github-button
+        >Star</GithubButton
       >
     </section>
 
